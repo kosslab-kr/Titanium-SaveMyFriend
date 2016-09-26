@@ -28,7 +28,6 @@ $.init = function() {
 
 // sms receiver
 CTX.initSMSReceiver = function() {
-  APP.log("debug", "CTX.initSMSReceiver :");
   if (OS_ANDROID) {
     var ASV = require('ti.andsmsverification');
     // check permission
