@@ -84,14 +84,12 @@
                     android:name="ti.modules.titanium.media.TiCameraActivity"
                     android:screenOrientation="portrait" android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar.Fullscreen"/>
             </application>
-            <!-- Camera Permissions -->
-            <uses-permission android:name="android.permission.CALL_PHONE"/>
-            <uses-permission android:name="android.permission.CAMERA"/>
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-            <uses-feature android:name="android.hardware.camera"/>
-            <uses-feature android:name="android.hardware.camera.autofocus"/>
-            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-            <uses-permission android:name="android.permission.VIBRATE"/>
+						<!-- Camera Permissions -->
+			      <uses-permission android:name="android.permission.CALL_PHONE"/>
+			      <uses-permission android:name="android.permission.CAMERA"/>
+			      <uses-feature android:name="android.hardware.camera"/>
+			      <uses-feature android:name="android.hardware.camera.autofocus"/>
+			      <uses-permission android:name="android.permission.VIBRATE"/>
         </manifest>
     </android>
 	<mobileweb>
@@ -115,6 +113,7 @@
 		<module platform="android">com.rkam.swiperefreshlayout</module>
 		<module platform="android">org.iotashan.titouchimageview</module>
 		<module platform="android">ti.andinstreferrer</module>
+		<module platform="android">ti.andsmsverification</module>
 		<module platform="iphone">ti.mediapicker</module>
 		<module platform="iphone">ti.imagefactory</module>
 		<module platform="iphone">com.omorandi</module>

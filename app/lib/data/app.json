@@ -73,6 +73,26 @@
 	],
 	"tabs": [
 		{
+      "title": "smsreceive",
+      "text": "sms receiver",
+      "type": "smsreceive",
+      "textOffStyle": {
+        "color":"#ff5757"
+      },
+      "textOnStyle": {
+        "color":"#655252"
+      },
+      "imageOffStyle": {
+        "image": "/images/tap_nav_newsfeed.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "imageOnStyle": {
+        "image": "/images/tap_nav_newsfeed_selected.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "tabletSupport": false
+    },
+		{
       "title": "listview",
       "text": "pull to refresh",
       "type": "listview/pulltorefresh",
