@@ -29,25 +29,25 @@ $.init = function() {
 // sms receiver
 CTX.initSMSReceiver = function() {
   if (OS_ANDROID) {
-    var ASV = require('ti.andsmsverification');
+    var ASV = require('ti.andsmsverification'); // 문자 모듈 불러옴
     // check permission
-    if (!ASV.hasPhonePermission() || !ASV.hasSMSPermission()) {
-      APP.alertCancel('need permission').then(function() {
+    if (!ASV.hasPhonePermission() || !ASV.hasSMSPermission()) { // 문자 permission(권한)이 없다면
+      APP.alertCancel('need permission').then(function() { // 권한이 필요하다는 알람을 띄운 후
         // request permission
-        ASV.requestPhonePermissions(function (e) {
-          if (e.success) {
+        ASV.requestPhonePermissions(function (e) { // 권한 요청
+          if (e.success) { // 수락하면 권한을 얻는다
             // success
             Ti.API.info('requestPhonePermissions : success');
             CTX.registSmsReceiver();
             CTX.getMobileNumber();
-          } else {
+          } else { // 거절
             // nothing
           }
         });
       }, function(err) {
         // nothing
       });
-    } else {
+    } else {  //권한이 있다면
       // already have
       Ti.API.info('requestPhonePermissions : already have');
       CTX.registSmsReceiver();

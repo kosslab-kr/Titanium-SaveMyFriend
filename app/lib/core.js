@@ -413,22 +413,22 @@ var APP = {
    */
   initUser: function() {
     // login after open main window
-    APP.UserM = Alloy.createModel('User');
+    APP.UserM = Alloy.createModel('User'); //model 폴더의 user.js를 불러옴 (Parse 서버 통신)
     // then restore or normal login, open main window
     APP.UserM.on('login:init', function(userM, isJoining) {
-      APP.log("debug", "User login:init : " + JSON.stringify(userM));
+      APP.log("debug", "User login:init : " + JSON.stringify(userM)); //우저 정보를 JSON으로 받아옴
       if (userM) APP.UserM.reset(userM);
 
       // Defers invoking the function until the current call stack has cleared
-      if (!APP.isUserLogin) {
+      if (!APP.isUserLogin) { //로그인 상태가 아니라면 로그인 성공
         _.defer(function() {
-          APP.initAfterLogin(isJoining);
+          APP.initAfterLogin(isJoining); // initAfterLogin 함수 실행 (파라미터로 회원가입 중인지 여부 포함)
         });
       }
       APP.isUserLogin = true;
     });
     // then login fail, open login view
-    APP.UserM.on('login:fail', function() {
+    APP.UserM.on('login:fail', function() { //로그인 실패 시 requiredLogin 함수 실행
       APP.UserM.off('login:fail',arguments.callee);
       APP.requiredLogin();
     });
@@ -463,10 +463,10 @@ var APP = {
     APP.build();
 
     // Open the main window
-    APP.MainWindow.open();
+    APP.MainWindow.open(); //index.js의 MainWindow 실행
 
     // joinView close
-    if (APP.joinView) {
+    if (APP.joinView) { // joinView가 켜져있다면 닫아줌
       APP.joinView.close();
       APP.joinView = null;
     }
