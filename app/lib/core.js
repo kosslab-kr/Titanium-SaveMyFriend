@@ -411,48 +411,48 @@ var APP = {
   /**
    * Initializes settings Model & user Model login try
    */
-  initUser: function() {
-    // login after open main window
-    APP.UserM = Alloy.createModel('User'); //model 폴더의 user.js를 불러옴 (Parse 서버 통신)
-    // then restore or normal login, open main window
-    APP.UserM.on('login:init', function(userM, isJoining) {
-      APP.log("debug", "User login:init : " + JSON.stringify(userM)); //우저 정보를 JSON으로 받아옴
-      if (userM) APP.UserM.reset(userM);
-
-      // Defers invoking the function until the current call stack has cleared
-      if (!APP.isUserLogin) { //로그인 상태가 아니라면 로그인 성공
-        _.defer(function() {
-          APP.initAfterLogin(isJoining); // initAfterLogin 함수 실행 (파라미터로 회원가입 중인지 여부 포함)
-        });
-      }
-      APP.isUserLogin = true;
-    });
-    // then login fail, open login view
-    APP.UserM.on('login:fail', function() { //로그인 실패 시 requiredLogin 함수 실행
-      APP.UserM.off('login:fail',arguments.callee);
-      APP.requiredLogin();
-    });
-    // user model persistance
-    APP.UserM.on('change', function() {
-      APP.log("debug", "change:user User Cached : SettingsM.UserM");
-      if (APP.isUserLogin) APP.SettingsM.save({ "UserM": JSON.stringify(APP.UserM.attributes) });
-    });
-    APP.UserM.on('reset', function() {
-      APP.log("debug", "reset:user User Cached : SettingsM.UserM");
-      if (APP.isUserLogin) APP.SettingsM.save({ "UserM": JSON.stringify(APP.UserM.attributes) });
-    });
-
-    // settings Model fetch & user Login
-    APP.SettingsM = Alloy.Models.instance('Settings');
-    APP.SettingsM.fetch({
-      success: function() {
-        APP.UserM.login();
-      },
-      error: function() {
-        APP.UserM.login();
-      }
-    });
-  },
+  // initUser: function() {
+    // // login after open main window
+    // APP.UserM = Alloy.createModel('User'); //model 폴더의 user.js를 불러옴 (Parse 서버 통신)
+    // // then restore or normal login, open main window
+    // APP.UserM.on('login:init', function(userM, isJoining) {
+      // APP.log("debug", "User login:init : " + JSON.stringify(userM)); //우저 정보를 JSON으로 받아옴
+      // if (userM) APP.UserM.reset(userM);
+// 
+      // // Defers invoking the function until the current call stack has cleared
+      // if (!APP.isUserLogin) { //로그인 상태가 아니라면 로그인 성공
+        // _.defer(function() {
+          // APP.initAfterLogin(isJoining); // initAfterLogin 함수 실행 (파라미터로 회원가입 중인지 여부 포함)
+        // });
+      // }
+      // APP.isUserLogin = true;
+    // });
+    // // then login fail, open login view
+    // APP.UserM.on('login:fail', function() { //로그인 실패 시 requiredLogin 함수 실행
+      // APP.UserM.off('login:fail',arguments.callee);
+      // APP.requiredLogin();
+    // });
+    // // user model persistance
+    // APP.UserM.on('change', function() {
+      // APP.log("debug", "change:user User Cached : SettingsM.UserM");
+      // if (APP.isUserLogin) APP.SettingsM.save({ "UserM": JSON.stringify(APP.UserM.attributes) });
+    // });
+    // APP.UserM.on('reset', function() {
+      // APP.log("debug", "reset:user User Cached : SettingsM.UserM");
+      // if (APP.isUserLogin) APP.SettingsM.save({ "UserM": JSON.stringify(APP.UserM.attributes) });
+    // });
+// 
+    // // settings Model fetch & user Login
+    // APP.SettingsM = Alloy.Models.instance('Settings');
+    // APP.SettingsM.fetch({
+      // success: function() {
+        // APP.UserM.login();
+      // },
+      // error: function() {
+        // APP.UserM.login();
+      // }
+    // });
+  // },
   /**
    * Initializes the application after login success
    */
@@ -464,12 +464,14 @@ var APP = {
 
     // Open the main window
     APP.MainWindow.open(); //index.js의 MainWindow 실행
+    //앱의 각종 설정을 저장하는 부분
+    APP.SettingsM = Alloy.Models.instance('Settings');
 
     // joinView close
-    if (APP.joinView) { // joinView가 켜져있다면 닫아줌
-      APP.joinView.close();
-      APP.joinView = null;
-    }
+    // if (APP.joinView) { // joinView가 켜져있다면 닫아줌
+      // APP.joinView.close();
+      // APP.joinView = null;
+    // }
 
     if(isJoining || APP.currentStack < 0){
       // The initial screen to show

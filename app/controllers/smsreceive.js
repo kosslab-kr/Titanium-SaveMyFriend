@@ -57,7 +57,7 @@ CTX.initSMSReceiver = function() {
 };
 
 // android get mobile number
-CTX.getMobileNumber = function() {
+CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워줌
   if (OS_ANDROID) {
     var ASV = require('ti.andsmsverification');
     var mobileNumber = ASV.getMobileNumber();
@@ -72,15 +72,16 @@ CTX.getMobileNumber = function() {
 };
 
 // get sms receiver
-CTX.registSmsReceiver = function() {
+CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
   if (OS_ANDROID) {
     CTX.isAlertTryCode = false;
     var ASV = require('ti.andsmsverification');
-    ASV.addEventListener("onSMSReceive", function(e) {
+    ASV.addEventListener("onSMSReceive", function(e) { // 메시지를 받아 e 변수에 저장
       APP.log("debug", "onSMSReceive :", e);
       var message = e.message;
-      // TODO
-      APP.alert(JSON.stringify(e));
+      // TODO 문자열 파싱하여 필터링하기
+      // APP.alert(e); // e를 그냥 띄우는 부분
+     APP.alert(JSON.stringify(e)); // e를 JSON으로 변환시켜 띄우는 부분
     });
   }
 };
