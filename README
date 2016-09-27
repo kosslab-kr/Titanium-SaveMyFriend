@@ -1,11 +1,30 @@
+
 Welcome to your Appcelerator Titanium Mobile Project
 
 This is a blank project.  Start by editing your application's app.js to 
 make your first mobile project using Titanium.
 
-#test
-##test 
+## Motive for development
+	- Disaster message can't be sent all of citizen cause of physical and technical limitation.
+	- If there are people who receive disaster message firstly, we can resend to our friends and family using SMS or Push Message.
+	- Needs to Increase efficiency of sending disaster message.
 
+## Basis of development
+	- Actually, all of GSM/CDMA communication did not work. VOIP based messenger properly worked during japaness earthquake(2011).
+	- The most mobile companies provide 'free SMS service'. we used this.
+
+## Goal
+	- Push and SMS send/receive
+	- Parse and filter disaster message.
+	- Load phone number registed in mobile device with App.
+	
+## Milestone
+
+## Reference
+
+## Support
+
+## License
 
 ----------------------------------
 Stuff our legal folk make us say:
