@@ -461,11 +461,10 @@ var APP = {
 
     // Builds out the tab group
     APP.build();
-
+	//앱 기초 설정
+	APP.SettingsM = Alloy.Models.instance('Settings');
     // Open the main window
     APP.MainWindow.open(); //index.js의 MainWindow 실행
-    //앱의 각종 설정을 저장하는 부분
-    APP.SettingsM = Alloy.Models.instance('Settings');
 
     // joinView close
     // if (APP.joinView) { // joinView가 켜져있다면 닫아줌

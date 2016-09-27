@@ -26,6 +26,39 @@ $.init = function() {
 	}
 };
 
+
+CTX.createContactRow = function (){
+	var people = Titanium.Contacts.getAllPeople(); // 연락처 데이터 목록들
+	var totalContacts = people.length;
+	
+	for( var index = 0; index < totalContacts; index++ ){
+         var person = people[index]; // 연락처 항목
+         var phone = "";
+         Titanium.API.info(person.fullName); // 로그
+        try{
+        	 phone = person.phone.mobile[0];
+			Titanium.API.info(phone);
+        }catch(e){Titanium.API.info("pulltorefresh : 번호 예외 발생");}
+        /*
+        var contactRows = _.map(person,function(person){
+        	 if(person.fullName != null){
+        		return{
+    				template : 'ContactTemplate',
+						name : { text: person.fullName },
+						 num : { text: phone },
+    				properties : {
+        				itemId : ContactModel.id
+    				}
+  				};
+  			}
+        });
+        */
+        //TODO 위의 contactRows 를 밑의 코드를 참고하여 수정한 후 ContactsSection에 추가해야한다.
+         // Titanium.API.info(contactRows); // 로그
+       // $.ContactsSection.setItems(contactRows);
+    }
+};
+// 밑의 부분은 사용하지 않는다.
 // fetch from parse
 // STUDY : http://parseplatform.github.io/docs/js/guide/#queries
 // {e} is pulltorefresh event
@@ -48,6 +81,7 @@ CTX.fetchGameScore = function(e) {
 	  }
 	});
 };
+
 
 // drawGameScore
 CTX.drawGameScore = function(GameScoreCollection) {
@@ -75,7 +109,7 @@ CTX.createGameSCoreRow = function (GameScoreModel) {
         itemId : GameScoreModel.id
     }
   };
-}
+};
 
 /**
 * scroll end for position save
@@ -93,15 +127,15 @@ CTX.listViewScrollend = function (e) {
  * init, fetch, 리스너 등록/해제
  */
 CTX.open = function() {
-	//등록
+
 	CTX.$observer = CTX.$observer || _.extend({}, Backbone.Events);
 	// CTX.$observer.listenTo(CTX.newsCol, 'new:news', redrawAfterRemote);
-
-	CTX.fetchGameScore();
-}
+	//이곳에서 화면의 띄워질 때 실행되는 함수를 입력한다.
+	CTX.createContactRow();
+};
 CTX.close = function() {
 	CTX.$observer.stopListening();
-}
+};
 
 /**
 * handleNavigation event
@@ -143,7 +177,7 @@ CTX.handleNavigation = function (e) {
       }
     }
   }
-}
+};
 
 /**
 * open event
