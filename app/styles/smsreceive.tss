@@ -15,3 +15,7 @@
 }
 ".mainView[platform=ios]": { top:67 }
 ".mainView[platform=android]": { top:47 }
+
+"#label": {
+	top: 60
+}

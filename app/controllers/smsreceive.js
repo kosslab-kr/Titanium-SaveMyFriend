@@ -71,8 +71,38 @@ CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워�
   }
 };
 
+
+//-------------------------------------- [ sms 파싱 및 스위치 버튼을 통한 제어 ]----------------------------------------------//
+var smsTypeFlag; // 여러개의 스위치로 배열을 선언하려 했으나 일단 변수로 선언했습니다. on/off시 true/false값이 저장됩니다.
+function outputState(){ // 버튼이 on<->off로 상태가 바뀌면 smsTypeFlag변수에 true/flase값이 저장됩니다.
+	smsTypeFlag = $.basicSwitch.value;
+}
+
+// 국민안전처 문자메세지 수신 번호 체크 함수
+function searchNum(num){
+	var findNum = num.match(/01032290420/ig); // ->>> match(/찾고싶은번호/ig); ig-> i:insensitive, g:globally
+	if(findNum != null) { // 해당 번호를 찾으면 true
+		return true;
+	}
+	else { // 찾지 못하면 false
+		return false;
+	}
+ };
+
+// 국민안전처 문자메세지 수신 내용 체크 함수
+function searchTxt(txt){
+	var findTxt = txt.match(/홍수/ig); // ->>> match(/찾고싶은문자/ig); ig-> i:insensitive, g:globally
+	if(findTxt != null){ // 해당 문자를 발견했으면 그 재난을 리턴시킵니다.
+		return findTxt;
+	}
+	else{
+		return false; // 해당 문자를 발견하지 못했으면 false
+	}
+}
+
 // get sms receiver
 CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
+  var txt="";
   if (OS_ANDROID) {
     CTX.isAlertTryCode = false;
     var ASV = require('ti.andsmsverification');
@@ -80,12 +110,20 @@ CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
       APP.log("debug", "onSMSReceive :", e);
       var message = e.message;
       // TODO 문자열 파싱하여 필터링하기
-      // APP.alert(e); // e를 그냥 띄우는 부분
-     APP.alert(JSON.stringify(e)); // e를 JSON으로 변환시켜 띄우는 부분
+      
+     if( smsTypeFlag == true){ // 만일 (홍수)스위치가 on일때 //
+     	var flag_num = searchNum(e.from); // 발신자를 추적하여 국민안전처에서 보낸 문자인지 확인하고
+     	var flag_txt = searchTxt(e.message); // 메세지 내용 중 스위치 on인 재난 문자 메세지가 포함되어 있을 경우
+     	if( flag_num && (flag_txt!=false)){ // 참이면 다음과 같은 알림이 뜨게 됩니다.
+     		APP.alert("재난 문자 수신, 재난 문자 종류는 " + flag_txt);
+     	}
+     }
+     
     });
   }
 };
 
+//-------------------------------------- [ sms 파싱 및 스위치 버튼을 통한 제어 ]----------------------------------------------//
 /**
  * init, fetch, 리스너 등록/해제
  */
@@ -95,10 +133,10 @@ CTX.open = function() {
 	// CTX.$observer.listenTo(CTX.newsCol, 'new:news', redrawAfterRemote);
 
   CTX.initSMSReceiver();
-}
+};
 CTX.close = function() {
 	CTX.$observer.stopListening();
-}
+};
 
 CTX.handleNavigation = function (e) {
   if (e.name == "smsreceive") {
