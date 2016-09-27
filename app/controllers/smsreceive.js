@@ -73,14 +73,26 @@ CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워�
 
 
 //-------------------------------------- [ sms 파싱 및 스위치 버튼을 통한 제어 ]----------------------------------------------//
-var smsTypeFlag; // 여러개의 스위치로 배열을 선언하려 했으나 일단 변수로 선언했습니다. on/off시 true/false값이 저장됩니다.
-function outputState(){ // 버튼이 on<->off로 상태가 바뀌면 smsTypeFlag변수에 true/flase값이 저장됩니다.
-	smsTypeFlag = $.basicSwitch.value;
-}
+var smsTypeFlag = new Array(); // 여러개의 스위치로 배열을 선언하려 했으나 일단 변수로 선언했습니다. on/off시 true/false값이 저장됩니다.
+var smsTypeLabel = new Array();
+
+/** $.id부분의 수정을 통해 반복문으로 바꿔야 한다. **/
+function outputState(){
+	 	// 버튼이 on<->off로 상태가 바뀌면 smsTypeFlag변수에 true/flase값이 저장됩니다.
+		//smsTypeFlag[0] = $.basicSwitch0.value; 
+		smsTypeFlag[1] = $.basicSwitch1.value;
+		smsTypeFlag[2] = $.basicSwitch2.value;
+															
+		// 라벨의 텍스트값을 저장합니다.
+		smsTypeLabel[0] = $.label0.text;
+		smsTypeLabel[1] = $.label1.text;
+		smsTypeLabel[2] = $.label2.text;	
+};
 
 // 국민안전처 문자메세지 수신 번호 체크 함수
-function searchNum(num){
-	var findNum = num.match(/01032290420/ig); // ->>> match(/찾고싶은번호/ig); ig-> i:insensitive, g:globally
+/** 국민안전처의 번호?를 알아내어 수정해야한다. **/
+function searchNum(num){ // 
+	var findNum = num.match(/01032290420/ig); // match(/찾고싶은번호/ig); ig-> i:insensitive, g:globally
 	if(findNum != null) { // 해당 번호를 찾으면 true
 		return true;
 	}
@@ -91,13 +103,19 @@ function searchNum(num){
 
 // 국민안전처 문자메세지 수신 내용 체크 함수
 function searchTxt(txt){
-	var findTxt = txt.match(/홍수/ig); // ->>> match(/찾고싶은문자/ig); ig-> i:insensitive, g:globally
-	if(findTxt != null){ // 해당 문자를 발견했으면 그 재난을 리턴시킵니다.
-		return findTxt;
+	/** /재난이름/ 부분을 수정하여 반복문으로 바꿔야한다. **/
+	var findTxt = new Array();
+	findTxt[0] = txt.match(/홍수/ig); // match(/찾고싶은문자/ig); ig-> i:insensitive, g:globally
+	findTxt[1] = txt.match(/지진/ig);
+	findTxt[2] = txt.match(/태풍/ig);
+	
+	for(var i=0;i<3;i++){
+		if(findTxt[i] != null) // 각 배열의 원소가 재난 문자 요소(홍수, 지진, 태풍)를 가지고 있는지 판별하고 만약 가지고 있으면 바로 return시켜 종료한다. (재난문자에 내용 중 재난은 1개이므로..?라고 임의로 정했다)
+			return findTxt[i];
+		else
+			continue;
 	}
-	else{
-		return false; // 해당 문자를 발견하지 못했으면 false
-	}
+	return false;
 }
 
 // get sms receiver
@@ -109,16 +127,25 @@ CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
     ASV.addEventListener("onSMSReceive", function(e) { // 메시지를 받아 e 변수에 저장
       APP.log("debug", "onSMSReceive :", e);
       var message = e.message;
-      // TODO 문자열 파싱하여 필터링하기
       
-     if( smsTypeFlag == true){ // 만일 (홍수)스위치가 on일때 //
-     	var flag_num = searchNum(e.from); // 발신자를 추적하여 국민안전처에서 보낸 문자인지 확인하고
-     	var flag_txt = searchTxt(e.message); // 메세지 내용 중 스위치 on인 재난 문자 메세지가 포함되어 있을 경우
-     	if( flag_num && (flag_txt!=false)){ // 참이면 다음과 같은 알림이 뜨게 됩니다.
-     		APP.alert("재난 문자 수신, 재난 문자 종류는 " + flag_txt);
-     	}
-     }
-     
+      // TODO 문자열 파싱하여 필터링하기
+      // 1. 먼저 국민안전처에서 보낸 문자 인지 확인.
+      var flag_num = searchNum(e.from);
+      if(flag_num){
+      	//2. 재난의 종류 파악
+      	var flag_txt = searchTxt(e.message);
+      	if(flag_txt!=false){ // 찾은 재난 문자 요소가 있다면
+      		//3. 재난의 종류와 일치하는 라벨의 스위치가 켜져있는지 검사
+      		for(var i=0;i<3;i++){
+      			if(smsTypeLabel[i]==flag_txt){ // sms에서 파싱된 재난 종류와 라벨이 일치하고
+      				if(smsTypeFlag[i]){ // 스위치가 ON이면
+      					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는 " + flag_txt); //
+      					break; // 하나의 재난 문자에 재난의 종류는 1개뿐이므로 break (임의로 정함)
+      				}
+      			}
+      		}
+      	}
+      }
     });
   }
 };

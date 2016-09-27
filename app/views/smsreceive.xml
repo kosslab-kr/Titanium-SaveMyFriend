@@ -2,8 +2,12 @@
 	<View id="window" class="container">
 		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		<View id="mainView" class="mainView">
-			<Label id="label" text="홍수"> </Label>
-			<Switch id="basicSwitch" value="true" onChange="outputState"/>			
+			<Label id="label0" text="홍수"> </Label>
+			<Label id="label1" text="지진"> </Label>
+			<Label id="label2" text="태풍"> </Label>
+			<Switch id="basicSwitch0" value="true" onChange="outputState"/>			
+			<Switch id="basicSwitch1" value="true" onChange="outputState"/>			
+			<Switch id="basicSwitch2" value="true" onChange="outputState"/>			
 		</View>
 	</View>
 </Alloy>

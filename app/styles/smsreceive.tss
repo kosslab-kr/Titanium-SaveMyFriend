@@ -16,6 +16,28 @@
 ".mainView[platform=ios]": { top:67 }
 ".mainView[platform=android]": { top:47 }
 
-"#label": {
-	top: 60
+"#label0": {
+	top: 60,
+	left: 60
+}
+"#label1": {
+	top: 90,
+	left: 60
+}
+"#label2": {
+	top: 120,
+	left: 60
+}
+
+"#basicSwitch0": {
+	top: 60,
+	left: 90
+}
+"#basicSwitch1": {
+	top: 90,
+	left: 90
+}
+"#basicSwitch2": {
+	top: 120,
+	left: 90
 }
