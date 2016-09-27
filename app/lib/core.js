@@ -325,7 +325,7 @@ var APP = {
       require("migrate").init();
 
       // Initializes settings Model & user Model login try
-      APP.initUser();
+      APP.initAfterLogin();
 
       // NOTICE:
       // The following sections are abstracted for PEEK
