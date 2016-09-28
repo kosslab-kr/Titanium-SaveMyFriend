@@ -28,6 +28,7 @@ $.init = function() {
 
 
 CTX.createContactRow = function (){
+	var data = [];
 	var people = Titanium.Contacts.getAllPeople(); // 연락처 데이터 목록들
 	var totalContacts = people.length;
 	
@@ -39,24 +40,17 @@ CTX.createContactRow = function (){
         	 phone = person.phone.mobile[0];
 			Titanium.API.info(phone);
         }catch(e){Titanium.API.info("pulltorefresh : 번호 예외 발생");}
-        /*
-        var contactRows = _.map(person,function(person){
-        	 if(person.fullName != null){
-        		return{
-    				template : 'ContactTemplate',
-						name : { text: person.fullName },
-						 num : { text: phone },
-    				properties : {
-        				itemId : ContactModel.id
-    				}
-  				};
-  			}
-        });
-        */
-        //TODO 위의 contactRows 를 밑의 코드를 참고하여 수정한 후 ContactsSection에 추가해야한다.
-         // Titanium.API.info(contactRows); // 로그
-       // $.ContactsSection.setItems(contactRows);
+        
+        var contactRows = {template : 'ContactTemplate', // view 폴더의 pulltorefresh.xml 참조
+						   		name : { text: person.fullName },
+						   		num : { text: phone },
+    						properties : {
+        						itemId : index.id
+    						}};
+          data.push(contactRows); //data 배열에 템플릿 push
     }
+    //섹션에 데이터 set
+    $.ContactsSection.setItems(data);
 };
 // 밑의 부분은 사용하지 않는다.
 // fetch from parse
