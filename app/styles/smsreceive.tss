@@ -16,6 +16,11 @@
 ".mainView[platform=ios]": { top:67 }
 ".mainView[platform=android]": { top:47 }
 
+"#label_title":{
+	top: 30,
+	left:60
+	
+}
 "#label0": {
 	top: 60,
 	left: 60

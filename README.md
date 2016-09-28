@@ -12,7 +12,7 @@
 
 ## Basis of development
 	- Actually, all of GSM/CDMA communication did not work. VOIP based messenger properly worked during japaness earthquake(2011).
-	- The most mobile companies provide 'free SMS service'. we used this.
+	- Most of mobile companies provide 'free SMS service'. we used this.
 
 ## Goal
 	- Push and SMS send/receive
