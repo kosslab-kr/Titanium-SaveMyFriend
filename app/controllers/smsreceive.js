@@ -66,7 +66,7 @@ CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워�
     if (mobileNumber) {
       mobileNumber = mobileNumber.replace(CTX.localNm, "");
       // TODO
-      APP.alert(mobileNumber);
+      // APP.alert(mobileNumber);
     }
   }
 };
@@ -91,7 +91,7 @@ function outputState(){
 // 국민안전처 문자메세지 수신 번호 체크 함수
 
 function searchNum(num){ // 
-	var findNum = num.match(/01032290420/ig); /** 수정해야할 부분 : 국민안전처 번호로 수정해야함 **/
+	var findNum = num.match(/01089159171/ig); /** 수정해야할 부분 : 국민안전처 번호로 수정해야함 **/
 	if(findNum != null) { // 해당 번호를 찾으면 true
 		return true;
 	}
@@ -138,7 +138,7 @@ CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
       		//3. 재난의 종류와 일치하는 라벨의 스위치가 켜져있는지 검사
       		for(var i=0;i<3;i++){
       			if(smsTypeLabel[i]==flag_txt && (smsTypeFlag[i])){ // sms에서 파싱된 재난 종류와 라벨이 일치하고      			
-   					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는 " + flag_txt); //
+   					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는  " + flag_txt +"\n문자내용:"+ message); //
    					break; // 하나의 재난 문자에 재난의 종류는 1개뿐이므로 break (임의로 정함)
       			}
       		}
