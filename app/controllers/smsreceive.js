@@ -73,26 +73,25 @@ CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워�
 
 
 //-------------------------------------- [ sms 파싱 및 스위치 버튼을 통한 제어 ]----------------------------------------------//
-var smsTypeFlag = new Array(); // 여러개의 스위치로 배열을 선언하려 했으나 일단 변수로 선언했습니다. on/off시 true/false값이 저장됩니다.
-var smsTypeLabel = new Array();
+var smsTypeFlag = new Array(); // 배열에 스위치 저장, on/off시 true/false값이 저장됩니다.
+var smsTypeLabel = new Array(); // 배열에 스위치의 라벨 텍스트값(홍수, 태풍, 지진)이 저장됩니다.
 
-/** $.id부분의 수정을 통해 반복문으로 바꿔야 한다. **/
+for(var i=0; i<3;  i++){
+	smsTypeLabel[i] = $["label"+i].text; // 라벨의 텍스트값을 smsTypeLabel배열에 저장
+	smsTypeFlag[i] = $["basicSwitch"+i].value; // smsTypeFlag 초기화
+}
+
+// 버튼이 on<->off로 상태가 바뀌면 smsTypeFlag변수에 true/flase값이 저장됩니다.
 function outputState(){
-	 	// 버튼이 on<->off로 상태가 바뀌면 smsTypeFlag변수에 true/flase값이 저장됩니다.
-		//smsTypeFlag[0] = $.basicSwitch0.value; 
-		smsTypeFlag[1] = $.basicSwitch1.value;
-		smsTypeFlag[2] = $.basicSwitch2.value;
-															
-		// 라벨의 텍스트값을 저장합니다.
-		smsTypeLabel[0] = $.label0.text;
-		smsTypeLabel[1] = $.label1.text;
-		smsTypeLabel[2] = $.label2.text;	
+	for(var i=0; i<3; i++){
+		smsTypeFlag[i] = $["basicSwitch"+i].value; 
+	}
 };
 
 // 국민안전처 문자메세지 수신 번호 체크 함수
-/** 국민안전처의 번호?를 알아내어 수정해야한다. **/
+
 function searchNum(num){ // 
-	var findNum = num.match(/01032290420/ig); // match(/찾고싶은번호/ig); ig-> i:insensitive, g:globally
+	var findNum = num.match(/01032290420/ig); /** 수정해야할 부분 : 국민안전처 번호로 수정해야함 **/
 	if(findNum != null) { // 해당 번호를 찾으면 true
 		return true;
 	}
@@ -103,14 +102,15 @@ function searchNum(num){ //
 
 // 국민안전처 문자메세지 수신 내용 체크 함수
 function searchTxt(txt){
-	/** /재난이름/ 부분을 수정하여 반복문으로 바꿔야한다. **/
 	var findTxt = new Array();
-	findTxt[0] = txt.match(/홍수/ig); // match(/찾고싶은문자/ig); ig-> i:insensitive, g:globally
-	findTxt[1] = txt.match(/지진/ig);
-	findTxt[2] = txt.match(/태풍/ig);
+	for(var i=0; i<3; i++){
+		findTxt[i] = txt.match(smsTypeLabel[i]); // match함수를 이용한 재난 문자 파싱
+	}
 	
 	for(var i=0;i<3;i++){
-		if(findTxt[i] != null) // 각 배열의 원소가 재난 문자 요소(홍수, 지진, 태풍)를 가지고 있는지 판별하고 만약 가지고 있으면 바로 return시켜 종료한다. (재난문자에 내용 중 재난은 1개이므로..?라고 임의로 정했다)
+		// 각 배열의 원소가 재난 문자 요소(홍수, 지진, 태풍)를 가지고 있는지 판별하고
+		// 해당 값이 존재하면 해당 값을 return, 존재하지 않으면 false
+		if(findTxt[i] != null)  
 			return findTxt[i];
 		else
 			continue;
