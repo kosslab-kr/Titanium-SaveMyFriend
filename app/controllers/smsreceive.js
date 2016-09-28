@@ -137,11 +137,9 @@ CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
       	if(flag_txt!=false){ // 찾은 재난 문자 요소가 있다면
       		//3. 재난의 종류와 일치하는 라벨의 스위치가 켜져있는지 검사
       		for(var i=0;i<3;i++){
-      			if(smsTypeLabel[i]==flag_txt){ // sms에서 파싱된 재난 종류와 라벨이 일치하고
-      				if(smsTypeFlag[i]){ // 스위치가 ON이면
-      					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는 " + flag_txt); //
-      					break; // 하나의 재난 문자에 재난의 종류는 1개뿐이므로 break (임의로 정함)
-      				}
+      			if(smsTypeLabel[i]==flag_txt && (smsTypeFlag[i])){ // sms에서 파싱된 재난 종류와 라벨이 일치하고      			
+   					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는 " + flag_txt); //
+   					break; // 하나의 재난 문자에 재난의 종류는 1개뿐이므로 break (임의로 정함)
       			}
       		}
       	}
