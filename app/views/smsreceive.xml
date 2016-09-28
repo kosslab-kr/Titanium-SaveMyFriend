@@ -2,6 +2,7 @@
 	<View id="window" class="container">
 		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		<View id="mainView" class="mainView">
+			<Label id="label_title" text="발신할 재난 종류 설정"></Label>
 			<Label id="label0" text="홍수"> </Label>
 			<Label id="label1" text="지진"> </Label>
 			<Label id="label2" text="태풍"> </Label>
