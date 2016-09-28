@@ -50,10 +50,10 @@
 ".contactName": {
 	color: 'black',
 	font: { fontFamily:'Arial', fontSize: '16dp' },
-	left: '10dp'
+	left: '20dp'
 }
 ".contactNum": {
 	color: 'black',
 	font: { fontFamily:'Arial', fontSize: '12dp' },
-	left: '10dp'
+	left: '20dp', top: '25dp'
 }

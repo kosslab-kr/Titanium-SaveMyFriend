@@ -11,7 +11,7 @@
 					<!-- Define your item templates within the Templates tags or use the
 					Require tag to include a view that only contains an ItemTemplate -->
 
-					<ItemTemplate name="template">
+					<!-- <ItemTemplate name="template">
 						<ImageView bindId="pic" id="icon" />
 						<Label bindId="info" id="title" />
 						<Label bindId="es_info" id="subtitle" />
@@ -21,37 +21,37 @@
 						<Label bindId="playerName" class="playerName" />
 						<Label bindId="score" class="score" />
 						<Label bindId="cheatMode" class="cheatMode" />
-					</ItemTemplate>
+					</ItemTemplate> -->
 			
 					<ItemTemplate name="ContactTemplate">
 						<Label bindId="name" class="contactName" />
-						<!-- <Label bindId="num" class="contactNum" /> -->
+						<Label bindId="num" class="contactNum" />
 					</ItemTemplate>
 
 				</Templates>
 				
 				<ListSection id="ContactsSection" headerTitle="연락처"/>
 
-				<ListSection id="GameScoreSection" headerTitle="GameScore"/>
+				<!-- <ListSection id="GameScoreSection" headerTitle="GameScore"/> -->
 
-				<ListSection headerTitle="Fruit / Frutas">
+				<!-- <ListSection headerTitle="Fruit / Frutas">
 
 					<!-- You can specify any ListItem or ListDataItem properties in ListItem -->
 
 					<!-- Specify data to bind to the item template with inline attributes
 					defined as <bindId>:<Ti.UI.Component.property> -->
 
-					<ListItem info:text="Apple" es_info:text="Manzana" pic:image="/apple.png" />
+					<!-- <ListItem info:text="Apple" es_info:text="Manzana" pic:image="/apple.png" />
 					<ListItem info:text="Banana" es_info:text="Banana" pic:image="/banana.png" />
-				</ListSection>
-				<ListSection headerTitle="Vegetables / Verduras">
+				</ListSection> -->
+				<!-- <ListSection headerTitle="Vegetables / Verduras">
 					<ListItem info:text="Carrot" es_info:text="Zanahoria" pic:image="/carrot.png" />
 					<ListItem info:text="Potato" es_info:text="Patata" pic:image="/potato.png" />
 				</ListSection>
 				<ListSection headerTitle="Grains / Granos">
 					<ListItem info:text="Corn" es_info:text="Maiz" pic:image="/corn.png" />
 					<ListItem info:text="Rice" es_info:text="Arroz" pic:image="/rice.png" />
-				</ListSection>
+				</ListSection> -->
 			</ListView>
 		</View>
 	</View>
