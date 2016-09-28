@@ -66,7 +66,7 @@ CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워�
     if (mobileNumber) {
       mobileNumber = mobileNumber.replace(CTX.localNm, "");
       // TODO
-      APP.alert(mobileNumber);
+      //APP.alert(mobileNumber);
     }
   }
 };
@@ -75,21 +75,21 @@ CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워�
 //-------------------------------------- [ sms 파싱 및 스위치 버튼을 통한 제어 ]----------------------------------------------//
 var smsTypeFlag = new Array(); // 배열에 스위치 저장, on/off시 true/false값이 저장됩니다.
 var smsTypeLabel = new Array(); // 배열에 스위치의 라벨 텍스트값(홍수, 태풍, 지진)이 저장됩니다.
+const DISASTER_NUM = 3; // 재난의 개수 3개 임의설정.
 
-for(var i=0; i<3;  i++){
+for(var i=0; i<DISASTER_NUM;  i++){
 	smsTypeLabel[i] = $["label"+i].text; // 라벨의 텍스트값을 smsTypeLabel배열에 저장
 	smsTypeFlag[i] = $["basicSwitch"+i].value; // smsTypeFlag 초기화
 }
 
 // 버튼이 on<->off로 상태가 바뀌면 smsTypeFlag변수에 true/flase값이 저장됩니다.
 function outputState(){
-	for(var i=0; i<3; i++){
+	for(var i=0; i<DISASTER_NUM; i++){
 		smsTypeFlag[i] = $["basicSwitch"+i].value; 
 	}
 };
 
 // 국민안전처 문자메세지 수신 번호 체크 함수
-
 function searchNum(num){ // 
 	var findNum = num.match(/01032290420/ig); /** 수정해야할 부분 : 국민안전처 번호로 수정해야함 **/
 	if(findNum != null) { // 해당 번호를 찾으면 true
@@ -103,7 +103,7 @@ function searchNum(num){ //
 // 국민안전처 문자메세지 수신 내용 체크 함수
 function searchTxt(txt){
 	var findTxt = new Array();
-	for(var i=0; i<3; i++){
+	for(var i=0; i<DISASTER_NUM; i++){
 		findTxt[i] = txt.match(smsTypeLabel[i]); // match함수를 이용한 재난 문자 파싱
 	}
 	
@@ -136,7 +136,7 @@ CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
       	var flag_txt = searchTxt(e.message);
       	if(flag_txt!=false){ // 찾은 재난 문자 요소가 있다면
       		//3. 재난의 종류와 일치하는 라벨의 스위치가 켜져있는지 검사
-      		for(var i=0;i<3;i++){
+      		for(var i=0;i<DISASTER_NUM;i++){
       			if(smsTypeLabel[i]==flag_txt && (smsTypeFlag[i])){ // sms에서 파싱된 재난 종류와 라벨이 일치하고      			
    					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는 " + flag_txt); //
    					break; // 하나의 재난 문자에 재난의 종류는 1개뿐이므로 break (임의로 정함)
