@@ -33,7 +33,7 @@ CTX.checkPermissions = function (){
 	}
 	else { // 권한이 없으면 권한 요청
 		Ti.Contacts.requestContactsPermissions(function (e) { // 
-			if(e.success()) // 권한 수락시 연락처 생성
+			if(e.success) // 권한 수락시 연락처 생성
 				CTX.createContactRow();
 			else{
 				//nothing
