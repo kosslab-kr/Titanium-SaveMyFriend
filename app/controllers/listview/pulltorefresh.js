@@ -9,6 +9,8 @@ var CONFIG = arguments[0] || {};
 var CTX = {};
 CTX.$observer = null;
 
+// 추가 부분
+// var userOnOff = APP.SettingsM.get("userOnOff");
 /**
  * Initializes the controller
  */
@@ -31,9 +33,14 @@ function contactSearch(e){
 	$.ContactsSection.searchText = e.value;
 };
 function cancelSearch(){
-	search.blur();
+	$.ContactSearch.blur();
 };
 
+// 리스트 내 버튼 클릭 시 함수
+function test_function(e){
+	Ti.API.info('Switch value: ' + e.value);
+	// APP.SettingsM.set(this.target, e.value).save();
+};
 
 CTX.createContactRow = function (){
 	var data = [];
@@ -52,9 +59,15 @@ CTX.createContactRow = function (){
         var contactRows = {template : 'ContactTemplate', // view 폴더의 pulltorefresh.xml 참조
 						   		name : { text: person.fullName },
 						   		num : { text: phone },
-    						properties : {
-        						itemId : index.id, searchableText: person.fullName //검색과 관련
-    						}};
+						   		test_switch : { 
+						   			// 이 부분을 어떻게 짜야할지 모르겠어서 default(false)값으로 나뒀습니다.
+						   			// userOnOff[person.fullName] == undefined ? "false" : userOnOff[person.fullName],
+						   			events: {change : test_function } 
+						   		},					   			 
+    							properties : {
+        							itemId : index.id, searchableText: person.fullName //검색과 관련
+    							}
+    						};
           data.push(contactRows); //data 배열에 템플릿 push
     }
     //섹션에 데이터 set

@@ -26,6 +26,7 @@
 					<ItemTemplate name="ContactTemplate">
 						<Label bindId="name" class="contactName" />
 						<Label bindId="num" class="contactNum" />
+						<Switch bindId="test_switch" value="false" class="contactSwitch"/> <!--target="name"-->
 					</ItemTemplate>
 
 				</Templates>
