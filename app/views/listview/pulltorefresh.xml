@@ -26,12 +26,12 @@
 					<ItemTemplate name="ContactTemplate">
 						<Label bindId="name" class="contactName" />
 						<Label bindId="num" class="contactNum" />
+						<Switch bindId="test_switch" value="false" class="contactSwitch"/> <!--target="name"-->
 					</ItemTemplate>
 
 				</Templates>
-				
-				<ListSection id="ContactsSection" headerTitle="연락처"/>
-
+				<SearchBar id="ContactSearch" onChange="contactSearch" onCancel="cancelSearch"></SearchBar>
+				<ListSection id="ContactsSection" headerTitle="연락처"/>	
 				<!-- <ListSection id="GameScoreSection" headerTitle="GameScore"/> -->
 
 				<!-- <ListSection headerTitle="Fruit / Frutas">

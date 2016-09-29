@@ -57,3 +57,13 @@
 	font: { fontFamily:'Arial', fontSize: '12dp' },
 	left: '20dp', top: '25dp'
 }
+".contactSwitch": {                     	
+     right: '10dp'
+}
+"#ContactSearch": {
+	barColor:'white', 
+    showCancel:true,
+    height:43,
+    top:0
+}
+

@@ -9,6 +9,8 @@ var CONFIG = arguments[0] || {};
 var CTX = {};
 CTX.$observer = null;
 
+// 추가 부분
+// var userOnOff = APP.SettingsM.get("userOnOff");
 /**
  * Initializes the controller
  */
@@ -26,7 +28,25 @@ $.init = function() {
 	}
 };
 
+<<<<<<< HEAD
 function createContact(){
+=======
+// 연락처 검색과 관련된 함수들
+function contactSearch(e){
+	$.ContactsSection.searchText = e.value;
+};
+function cancelSearch(){
+	$.ContactSearch.blur();
+};
+
+// 리스트 내 버튼 클릭 시 함수
+function test_function(e){
+	Ti.API.info('Switch value: ' + e.value);
+	// APP.SettingsM.set(this.target, e.value).save();
+};
+
+CTX.createContactRow = function (){
+>>>>>>> d29a73f7771666c31344cd400aa84dae1c14cc26
 	var data = [];
 	var people = Titanium.Contacts.getAllPeople(); // 연락처 데이터 목록들
 	var totalContacts = people.length;
@@ -43,9 +63,15 @@ function createContact(){
         var contactRows = {template : 'ContactTemplate', // view 폴더의 pulltorefresh.xml 참조
 						   		name : { text: person.fullName },
 						   		num : { text: phone },
-    						properties : {
-        						itemId : index.id
-    						}};
+						   		test_switch : { 
+						   			// 이 부분을 어떻게 짜야할지 모르겠어서 default(false)값으로 나뒀습니다.
+						   			// userOnOff[person.fullName] == undefined ? "false" : userOnOff[person.fullName],
+						   			events: {change : test_function } 
+						   		},					   			 
+    							properties : {
+        							itemId : index.id, searchableText: person.fullName //검색과 관련
+    							}
+    						};
           data.push(contactRows); //data 배열에 템플릿 push
     }
     //섹션에 데이터 set
