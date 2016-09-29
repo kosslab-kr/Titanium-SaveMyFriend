@@ -51,20 +51,19 @@ CTX.createContactRow = function (){
 	for( var index = 0; index < totalContacts; index++ ){
          var person = people[index]; // 연락처 항목
          var phone = "";
-         Titanium.API.info(person.fullName); // 로그
         try{
         	 phone = person.phone.mobile[0];
-			Titanium.API.info(phone);
         }catch(e){Titanium.API.info("pulltorefresh : 번호 예외 발생");}
+        
+        var switchValue = Ti.App.Properties.getBool(person.fullName); // 스위치값
+        if(switchValue == null) switchValue = false; // 스위치값이 null이라면 false
+        Titanium.API.error(person.fullName); 
+        Titanium.API.error(switchValue); // 로그
         
         var contactRows = {template : 'ContactTemplate', // view 폴더의 pulltorefresh.xml 참조
 						   		name : { text: person.fullName },
 						   		num : { text: phone },
-						   		test_switch : { 
-						   			// 이 부분을 어떻게 짜야할지 모르겠어서 default(false)값으로 나뒀습니다.
-						   			// userOnOff[person.fullName] == undefined ? "false" : userOnOff[person.fullName],
-						   			events: {change : test_function } 
-						   		},					   			 
+						   		test_switch : { value : switchValue },					   			 
     							properties : {
         							itemId : index.id, searchableText: person.fullName //검색과 관련
     							}
@@ -82,12 +81,31 @@ function contactSearch(e){
 function cancelSearch(){
 	$.ContactSearch.blur();
 };
-
+// 스위치 클릭시 switchClickListener 와 addEventListener 가 같이 호출된다.
+var switchValue; // 스위치값
 // 리스트 내 버튼 클릭 시 함수
-function test_function(e){
-	Ti.API.info('Switch value: ' + e.value);
+function switchClickListener(e){ // 스위치 클릭 리스너
+	Ti.API.info('target: ' + JSON.stringify(this));
+	Ti.API.info('Switch value: ' + e.value); // 현재 값
+	switchValue = e.value; // 스위치 클릭 시 저장
 	// APP.SettingsM.set(this.target, e.value).save();
 };
+
+$.listView.addEventListener('itemclick',function(e){ //리스트뷰 클릭 리스너
+	var currentRow = e.section.getItemAt(e.itemIndex); // 현재 열의 정보를 가져옴
+	Ti.API.error('listview click: ' + JSON.stringify(currentRow));
+	var name = currentRow.name.text; // 현재 열의 이름을 name에 저장
+	Ti.API.error('num: ' + name);
+	Ti.API.error('switchValue: ' + switchValue);
+	
+	if(switchValue == true){
+		Ti.App.Properties.setBool(name, true); //id값 = 이름, switchvalue 으로 저장
+	}else{
+		Ti.App.Properties.setBool(name, false); 
+	}
+	Ti.API.error('getsaveValue : ' + Ti.App.Properties.getBool(name));
+	
+});
 
 // 밑의 부분은 사용하지 않는다.
 // fetch from parse
