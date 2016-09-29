@@ -20,6 +20,14 @@
 	- Load phone number registed in mobile device with App.
 	
 ## Milestone
+	- 2016.09.24 : Team building, Generate Github Repository.
+	- 2016.09.25 : Titanium Development Enviroment Setting.
+	- 2016.09.26 : Make Message filter logic.
+	- 2016.09.27 : SMS Parsing and make 'select button'
+	- 2016.09.28 : Simplify parsing and filtering logic simplization. 
+	- 2016.09.29 : 
+	- 2016.09.30 :
+	- 2016.10.01 : 
 
 ## Member & Role (Github ID)
 
