@@ -26,6 +26,14 @@ $.init = function() {
 	}
 };
 
+// 연락처 검색과 관련된 함수들
+function contactSearch(e){
+	$.ContactsSection.searchText = e.value;
+};
+function cancelSearch(){
+	search.blur();
+};
+
 
 CTX.createContactRow = function (){
 	var data = [];
@@ -45,7 +53,7 @@ CTX.createContactRow = function (){
 						   		name : { text: person.fullName },
 						   		num : { text: phone },
     						properties : {
-        						itemId : index.id
+        						itemId : index.id, searchableText: person.fullName //검색과 관련
     						}};
           data.push(contactRows); //data 배열에 템플릿 push
     }

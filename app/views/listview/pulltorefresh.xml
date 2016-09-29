@@ -29,9 +29,8 @@
 					</ItemTemplate>
 
 				</Templates>
-				
-				<ListSection id="ContactsSection" headerTitle="연락처"/>
-
+				<SearchBar id="ContactSearch" onChange="contactSearch" onCancel="cancelSearch"></SearchBar>
+				<ListSection id="ContactsSection" headerTitle="연락처"/>	
 				<!-- <ListSection id="GameScoreSection" headerTitle="GameScore"/> -->
 
 				<!-- <ListSection headerTitle="Fruit / Frutas">

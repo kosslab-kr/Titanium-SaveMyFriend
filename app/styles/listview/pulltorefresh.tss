@@ -57,3 +57,10 @@
 	font: { fontFamily:'Arial', fontSize: '12dp' },
 	left: '20dp', top: '25dp'
 }
+"#ContactSearch": {
+	barColor:'white', 
+    showCancel:true,
+    height:43,
+    top:0
+}
+
