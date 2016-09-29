@@ -26,8 +26,7 @@ $.init = function() {
 	}
 };
 
-
-CTX.createContactRow = function (){
+function createContact(){
 	var data = [];
 	var people = Titanium.Contacts.getAllPeople(); // 연락처 데이터 목록들
 	var totalContacts = people.length;
@@ -52,6 +51,23 @@ CTX.createContactRow = function (){
     //섹션에 데이터 set
     $.ContactsSection.setItems(data);
 };
+
+CTX.createContactRow = function (){
+	if(Ti.Contacts.hasContactsPermissions){  // 전화번호부 권한이 있으면
+		createContact(); // 권한요청없이 전화번호부 리스트 생성
+	}
+	else { // 권한이 없으면 권한 요청
+		Ti.Contacts.requestContactsPermissions(function (e) { // 
+			if(e.success()) // 권한 수락시 연락처 생성
+				createContact();
+			else{
+				//nothing
+			}
+		});	
+	}
+	 
+};
+
 // 밑의 부분은 사용하지 않는다.
 // fetch from parse
 // STUDY : http://parseplatform.github.io/docs/js/guide/#queries
