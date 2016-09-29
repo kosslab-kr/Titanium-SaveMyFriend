@@ -10,7 +10,7 @@
 	<fullscreen>false</fullscreen>
 	<navbar-hidden>false</navbar-hidden>
 	<analytics>true</analytics>
-	<guid>49dff3b3-81e6-4ec6-9d98-a526ac84a5ef</guid>
+	<guid>16f35731-ec25-4568-9bbb-5d61123d9353</guid>
 	<property name="ti.ui.defaultunit" type="string">dp</property>
 	<ios>
         <min-ios-ver>8.0</min-ios-ver>

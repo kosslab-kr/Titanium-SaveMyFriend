@@ -27,26 +27,23 @@ $.init = function() {
 
 	}
 };
-
-<<<<<<< HEAD
-function createContact(){
-=======
-// 연락처 검색과 관련된 함수들
-function contactSearch(e){
-	$.ContactsSection.searchText = e.value;
-};
-function cancelSearch(){
-	$.ContactSearch.blur();
-};
-
-// 리스트 내 버튼 클릭 시 함수
-function test_function(e){
-	Ti.API.info('Switch value: ' + e.value);
-	// APP.SettingsM.set(this.target, e.value).save();
+CTX.checkPermissions = function (){
+	if(Ti.Contacts.hasContactsPermissions){  // 전화번호부 권한이 있으면
+		CTX.createContactRow(); // 권한요청없이 전화번호부 리스트 생성
+	}
+	else { // 권한이 없으면 권한 요청
+		Ti.Contacts.requestContactsPermissions(function (e) { // 
+			if(e.success()) // 권한 수락시 연락처 생성
+				CTX.createContactRow();
+			else{
+				//nothing
+			}
+		});	
+	}
+	 
 };
 
 CTX.createContactRow = function (){
->>>>>>> d29a73f7771666c31344cd400aa84dae1c14cc26
 	var data = [];
 	var people = Titanium.Contacts.getAllPeople(); // 연락처 데이터 목록들
 	var totalContacts = people.length;
@@ -78,20 +75,18 @@ CTX.createContactRow = function (){
     $.ContactsSection.setItems(data);
 };
 
-CTX.createContactRow = function (){
-	if(Ti.Contacts.hasContactsPermissions){  // 전화번호부 권한이 있으면
-		createContact(); // 권한요청없이 전화번호부 리스트 생성
-	}
-	else { // 권한이 없으면 권한 요청
-		Ti.Contacts.requestContactsPermissions(function (e) { // 
-			if(e.success()) // 권한 수락시 연락처 생성
-				createContact();
-			else{
-				//nothing
-			}
-		});	
-	}
-	 
+// 연락처 검색과 관련된 함수들
+function contactSearch(e){
+	$.ContactsSection.searchText = e.value;
+};
+function cancelSearch(){
+	$.ContactSearch.blur();
+};
+
+// 리스트 내 버튼 클릭 시 함수
+function test_function(e){
+	Ti.API.info('Switch value: ' + e.value);
+	// APP.SettingsM.set(this.target, e.value).save();
 };
 
 // 밑의 부분은 사용하지 않는다.
@@ -167,7 +162,7 @@ CTX.open = function() {
 	CTX.$observer = CTX.$observer || _.extend({}, Backbone.Events);
 	// CTX.$observer.listenTo(CTX.newsCol, 'new:news', redrawAfterRemote);
 	//이곳에서 화면의 띄워질 때 실행되는 함수를 입력한다.
-	CTX.createContactRow();
+	CTX.checkPermissions();
 };
 CTX.close = function() {
 	CTX.$observer.stopListening();
