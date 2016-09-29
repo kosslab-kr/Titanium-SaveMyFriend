@@ -28,7 +28,7 @@ $.init = function() {
 	}
 };
 CTX.checkPermissions = function (){
-	if(Ti.Contacts.hasContactsPermissions){  // 전화번호부 권한이 있으면
+	if(Ti.Contacts.hasContactsPermissions()){  // 전화번호부 권한이 있으면
 		CTX.createContactRow(); // 권한요청없이 전화번호부 리스트 생성
 	}
 	else { // 권한이 없으면 권한 요청
