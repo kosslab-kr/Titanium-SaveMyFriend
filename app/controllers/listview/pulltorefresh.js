@@ -27,6 +27,7 @@ $.init = function() {
 
 	}
 };
+
 CTX.checkPermissions = function (){
 	if(Ti.Contacts.hasContactsPermissions()){  // 전화번호부 권한이 있으면
 		CTX.createContactRow(); // 권한요청없이 전화번호부 리스트 생성
@@ -72,6 +73,7 @@ CTX.createContactRow = function (){
     }
     //섹션에 데이터 set
     $.ContactsSection.setItems(data);
+    //return data;
 };
 
 // 연락처 검색과 관련된 함수들
@@ -92,19 +94,27 @@ function switchClickListener(e){ // 스위치 클릭 리스너
 };
 
 $.listView.addEventListener('itemclick',function(e){ //리스트뷰 클릭 리스너
-	var currentRow = e.section.getItemAt(e.itemIndex); // 현재 열의 정보를 가져옴
-	Ti.API.error('listview click: ' + JSON.stringify(currentRow));
-	var name = currentRow.name.text; // 현재 열의 이름을 name에 저장
-	Ti.API.error('num: ' + name);
-	Ti.API.error('switchValue: ' + switchValue);
-	
-	if(switchValue == true){
-		Ti.App.Properties.setBool(name, true); //id값 = 이름, switchvalue 으로 저장
-	}else{
-		Ti.App.Properties.setBool(name, false); 
-	}
-	Ti.API.error('getsaveValue : ' + Ti.App.Properties.getBool(name));
-	
+    var currentRow = e.section.getItemAt(e.itemIndex); // 현재 열의 정보를 가져옴
+    Ti.API.error('listview click: ' + JSON.stringify(currentRow));
+    var name = currentRow.name.text; // 현재 열의 이름을 name에 저장
+    var phoneNum = JSON.stringify(currentRow.num.text); // 현재 열의 이름을 name에 저장
+    Ti.API.error('name: ' + name);
+    Ti.API.error('switchValue: ' + switchValue);
+    
+    var phoneArr = APP.SettingsM.get("phoneArr2"); // 번호 배열 불러옴
+       if(phoneArr == null) phoneArr = {}; // 번호 배열이 null이라면 초기화
+    Ti.API.error('phoneArr-: ' + JSON.stringify(phoneArr));
+    
+    if(switchValue == true){
+        Ti.App.Properties.setBool(name, true); //id값 = 이름, switchvalue 으로 저장
+        phoneArr[name] = phoneNum; 
+        // Ti.App.Properties.setString("contactArr2", phoneArr); //id값 = 이름, switchvalue 으로 저장        Ti.App.Properties.setBool(name, false); 
+        APP.SettingsM.set("phoneArr2", phoneArr).save();
+    }else{
+    	Ti.App.Properties.setBool(name, false); 
+    }
+    Ti.API.error('getsaveValue : ' + Ti.App.Properties.getBool(name));
+    
 });
 
 // 밑의 부분은 사용하지 않는다.

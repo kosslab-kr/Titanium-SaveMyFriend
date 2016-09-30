@@ -325,7 +325,17 @@ var APP = {
       require("migrate").init();
 
       // Initializes settings Model & user Model login try
-      APP.initAfterLogin();
+      // settings Model fetch & user Login
+	    APP.SettingsM = Alloy.Models.instance('Settings');
+	    APP.SettingsM.fetch({
+	      success: function() {
+	        APP.initAfterLogin();
+	      },
+	      error: function() {
+	        APP.initAfterLogin();
+	      }
+	    });
+      
 
       // NOTICE:
       // The following sections are abstracted for PEEK

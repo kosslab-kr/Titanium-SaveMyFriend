@@ -83,10 +83,17 @@ for(var i=0; i<DISASTER_NUM;  i++){
 }
 
 // 버튼이 on<->off로 상태가 바뀌면 smsTypeFlag변수에 true/flase값이 저장됩니다.
+
+
 function outputState(){
 	for(var i=0; i<DISASTER_NUM; i++){
 		smsTypeFlag[i] = $["basicSwitch"+i].value; 
 	}
+	var selectM = list.createContactRow();
+// for(var i =0; i<selectM.length;i++){
+	// alert(selectM(i).name);
+// }
+
 };
 
 // 국민안전처 문자메세지 수신 번호 체크 함수
@@ -117,6 +124,14 @@ function searchTxt(txt){
 	}
 	return false;
 }
+
+// -------------
+
+
+// -------------
+
+
+
 
 // get sms receiver
 CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
