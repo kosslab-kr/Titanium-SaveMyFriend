@@ -104,7 +104,7 @@ function searchNum(num){ //
 		return true;
 	}
 	else { // 찾지 못하면 false
-		return true; // TODO false로 바꿔야함
+		return true; // TODO false로  바꿔야함
 	}
  };
 

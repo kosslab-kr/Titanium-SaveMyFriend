@@ -20,7 +20,7 @@ var phoneArr;
 
 // SMS를 보내자
 function smsSend(msg) {
-	phoneArr = APP.SettingsM.get("phoneArr5");
+	phoneArr = APP.SettingsM.get("phoneArr6");
 	Ti.API.error('smsSend 진입'); // 현재 값
 	var messageBody = msg;
 
