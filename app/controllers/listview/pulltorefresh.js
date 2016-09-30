@@ -101,15 +101,15 @@ $.listView.addEventListener('itemclick',function(e){ //리스트뷰 클릭 리�
     Ti.API.error('name: ' + name);
     Ti.API.error('switchValue: ' + switchValue);
     
-    var phoneArr = APP.SettingsM.get("phoneArr3"); // 번호 배열 불러옴
-       if(phoneArr == null) phoneArr = {}; // 번호 배열이 null이라면 초기화
+    var phoneArr = APP.SettingsM.get("phoneArr5"); // 번호 배열 불러옴
+       if(phoneArr == null) phoneArr = []; // 번호 배열이 null이라면 초기화
     Ti.API.error('phoneArr: ' + JSON.stringify(phoneArr));
     
     if(switchValue == true){
         Ti.App.Properties.setBool(name, true); //id값 = 이름, switchvalue 으로 저장
-        phoneArr[name] = phoneNum; 
+        phoneArr.push(phoneNum); 
         // Ti.App.Properties.setString("contactArr2", phoneArr); //id값 = 이름, switchvalue 으로 저장        Ti.App.Properties.setBool(name, false); 
-        APP.SettingsM.set("phoneArr3", phoneArr).save();
+        APP.SettingsM.set("phoneArr5", phoneArr).save();
     }else{
     	Ti.App.Properties.setBool(name, false); 
     }
