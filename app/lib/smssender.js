@@ -1,6 +1,7 @@
 var Q = require("q");
 var selectedModels = [];
-
+var APP = require("core");
+var phoneArr;
 // 리스크 클릭시 선택 처리
 // $.listView.addEventListener('itemclick', function(e){
 	// var item = $.section.getItemAt(e.itemIndex);
@@ -19,6 +20,8 @@ var selectedModels = [];
 
 // SMS를 보내자
 function smsSend() {
+	phoneArr = APP.SettingsM.get("phoneArr2");
+	Ti.API.error('smsSend 진입'); // 현재 값
 	var messageBody = $.msgInput.value;
 
 	if (OS_ANDROID) {
@@ -31,25 +34,32 @@ function smsSend() {
 		});
 	}
 }
+exports.smsSend = smsSend;
 
-var selectM = [
-{phone: '010-1234-5678'},
-{phone: '010-1234-5678'},
-{phone: '010-1234-5678'},
-{phone: '010-1234-5678'},
-{phone: '010-1234-5678'}
-];
 
-smsSendAndroidQ(0, 'message');
 
+
+/*
+smsSend();
+var smsSend = function(){
+	
+	Ti.API.error("phoneArr: ", phoneArr);
+	Ti.API.error("phoneArr.size: ", phoneArr.size(););
+	for()
+};
+*/
 // 배열의 순차처리
+
 var smsSendAndroidQ = function (idx, messageBody) {
+	
 	Ti.API.debug("smsSendAndroidQ function idx : ", idx);
-	if (idx > selectM.length -1) { return Q(true); }
+	Ti.API.error("phoneArr :"+phoneArr);
+	if (idx > phoneArr.length -1) { return Q(true); }
+
 
 	//var contactM = selectedModels[idx];
 	//var toUser = contactM ? contactM.getUserInfo() : {};
-	var select = selectM[idx];
+	var select = phoneArr[idx];
 
 	return smsSendAndroid({ phone : select.phone , messageBody : messageBody }).then(function(result) {
 		return smsSendAndroidQ(idx+ 1, messageBody);
@@ -59,6 +69,8 @@ var smsSendAndroidQ = function (idx, messageBody) {
 };
 exports.smsSendAndroidQ = smsSendAndroidQ;
 
+//smsSendAndroidQ(0, 'message');
+
 function smsSendAndroid(smsParam) {
 	var deferred = Q.defer();
 
@@ -66,23 +78,26 @@ function smsSendAndroid(smsParam) {
 		phoneNumber : smsParam.phone,
 		messageBody : smsParam.messageBody
 	};
-
+	
+	Titanium.API.debug(params);
+	
 	if (OS_ANDROID) {
-		var smsMod = require('ti.android.sms');
-		Ti.API.debug("module is => " + smsMod);
-
-		smsMod.addEventListener('complete', function(e){
-			Ti.API.debug('Result: ', (e.success?'success':'failure'), ' msg: ', e.resultMessage, ' / ', e);
-			if (e.success) {
-				deferred.resolve(e);
-			} else {
-				deferred.reject(e);
-			}
-
-			smsMod.removeEventListener('complete', arguments.callee);
-		});
-		Ti.API.debug('smsSendAndroid :', params.phoneNumber, '/ msg:', params.messageBody);
-		smsMod.sendSMS(params.phoneNumber, params.messageBody);
+		// var smsMod = require('ti.android.sms');
+		// Ti.API.debug("module is => " + smsMod);
+// 
+		// smsMod.addEventListener('complete', function(e){
+			// Ti.API.debug('Result: ', (e.success?'success':'failure'), ' msg: ', e.resultMessage, ' / ', e);
+			// if (e.success) {
+				// deferred.resolve(e);
+			// } else {
+				// deferred.reject(e);
+			// }
+// 
+			// smsMod.removeEventListener('complete', arguments.callee);
+		// });
+		// Ti.API.debug('smsSendAndroid :', params.phoneNumber, '/ msg:', params.messageBody);
+		// smsMod.sendSMS(params.phoneNumber, params.messageBody);
+		deferred.resolve();
 	}
 
 	return deferred.promise;

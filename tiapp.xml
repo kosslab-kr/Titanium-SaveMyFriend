@@ -10,7 +10,7 @@
 	<fullscreen>false</fullscreen>
 	<navbar-hidden>false</navbar-hidden>
 	<analytics>true</analytics>
-	<guid>16f35731-ec25-4568-9bbb-5d61123d9353</guid>
+	<guid>5850e7a5-e067-4055-9fff-c8545dfc2ab8</guid>
 	<property name="ti.ui.defaultunit" type="string">dp</property>
 	<ios>
         <min-ios-ver>8.0</min-ios-ver>
@@ -122,7 +122,7 @@
 	<deployment-targets>
 		<target device="android">true</target>
 		<target device="ipad">false</target>
-		<target device="iphone">true</target>
+		<target device="iphone">false</target>
 		<target device="mobileweb">false</target>
 		<target device="windows">false</target>
 	</deployment-targets>

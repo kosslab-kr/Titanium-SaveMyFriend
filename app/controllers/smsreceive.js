@@ -4,6 +4,7 @@
 var APP = require("core");
 var UTIL = require("utilities");
 var STRING = require("alloy/string");
+var SMSSEND = require("smssender");
 
 var CONFIG = arguments[0] || {};
 var CTX = {};
@@ -55,12 +56,12 @@ CTX.initSMSReceiver = function() {
     }
   }
 };
-
+var mobileNumber;
 // android get mobile number
 CTX.getMobileNumber = function() { // 내 번호를 가져와 알람을 띄워줌
   if (OS_ANDROID) {
     var ASV = require('ti.andsmsverification');
-    var mobileNumber = ASV.getMobileNumber();
+    mobileNumber = ASV.getMobileNumber();
     APP.log("debug", "CTX.getMobileNumber :", mobileNumber);
 
     if (mobileNumber) {
@@ -98,7 +99,7 @@ function outputState(){
 
 // 국민안전처 문자메세지 수신 번호 체크 함수
 function searchNum(num){ // 
-	var findNum = num.match(/01032290420/ig); /** 수정해야할 부분 : 국민안전처 번호로 수정해야함 **/
+	var findNum = num.match(/01026059941/ig); /** 수정해야할 부분 : 국민안전처 번호로 수정해야함 **/
 	if(findNum != null) { // 해당 번호를 찾으면 true
 		return true;
 	}
@@ -154,6 +155,7 @@ CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
       		for(var i=0;i<DISASTER_NUM;i++){
       			if(smsTypeLabel[i]==flag_txt && (smsTypeFlag[i])){ // sms에서 파싱된 재난 종류와 라벨이 일치하고      			
    					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는 " + flag_txt); //
+   					SMSSEND.smsSend();
    					break; // 하나의 재난 문자에 재난의 종류는 1개뿐이므로 break (임의로 정함)
       			}
       		}
