@@ -155,7 +155,7 @@ CTX.registSmsReceiver = function() { //문자를 받으면 알람을 띄워줌
       		for(var i=0;i<DISASTER_NUM;i++){
       			if(smsTypeLabel[i]==flag_txt && (smsTypeFlag[i])){ // sms에서 파싱된 재난 종류와 라벨이 일치하고      			
    					alert("[SUCCESS] 재난 문자 수신, 재난의 종류는 " + flag_txt); //
-   					SMSSEND.smsSend();
+   					SMSSEND.smsSend(message);
    					break; // 하나의 재난 문자에 재난의 종류는 1개뿐이므로 break (임의로 정함)
       			}
       		}

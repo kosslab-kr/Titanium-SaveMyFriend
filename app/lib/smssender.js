@@ -19,10 +19,10 @@ var phoneArr;
 // });
 
 // SMS를 보내자
-function smsSend() {
-	phoneArr = APP.SettingsM.get("phoneArr2");
+function smsSend(msg) {
+	phoneArr = APP.SettingsM.get("phoneArr3");
 	Ti.API.error('smsSend 진입'); // 현재 값
-	var messageBody = $.msgInput.value;
+	var messageBody = msg;
 
 	if (OS_ANDROID) {
 		smsSendAndroidQ(0, messageBody).then(function(restult) {
@@ -53,15 +53,15 @@ var smsSend = function(){
 var smsSendAndroidQ = function (idx, messageBody) {
 	
 	Ti.API.debug("smsSendAndroidQ function idx : ", idx);
-	Ti.API.error("phoneArr :"+phoneArr);
+	Ti.API.error("phoneArr :"+JSON.stringify(phoneArr));
 	if (idx > phoneArr.length -1) { return Q(true); }
 
 
 	//var contactM = selectedModels[idx];
 	//var toUser = contactM ? contactM.getUserInfo() : {};
 	var select = phoneArr[idx];
-
-	return smsSendAndroid({ phone : select.phone , messageBody : messageBody }).then(function(result) {
+	Ti.API.error("select :"+select);
+	return smsSendAndroid({ phone : select , messageBody : messageBody }).then(function(result) {
 		return smsSendAndroidQ(idx+ 1, messageBody);
 	}).fail(function(error) {
 		return Q.reject(error);
